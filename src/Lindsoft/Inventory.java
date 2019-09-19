@@ -11,10 +11,11 @@ public class Inventory {
     public Inventory() {
         this.itemsInInventory = new HashSet<>();
         this.items = new HashSet<>();
+        this.itemsInInventory.add(null);
     }
 
-    public void addToItems (String item) {
-        if(items.contains(item)) {
+    public void addToItems(String item) {
+        if (items.contains(item)) {
             System.out.println("That " + item + " was already in the list so i overwrote it with the new item");
         } else {
             this.items.add(item.toUpperCase());
@@ -24,12 +25,11 @@ public class Inventory {
 
     public boolean addItemInventory(String item) {
 
-        if(itemsInInventory.contains(item)) {
-            System.out.println("This is where you found the " + item + " there's nothing more useful here");
+        if (itemsInInventory.contains(item)) {
+            System.out.println("There's nothing more useful here");
             return false;
 
-        } else if(items.contains(item)) {
-            System.out.println("Found a " + item + ", this could be useful. I'll save this for later.");
+        } else if (items.contains(item)) {
             System.out.println("====You placed " + item + " in your inventory==========");
             itemsInInventory.add(item);
             return true;
@@ -45,14 +45,27 @@ public class Inventory {
         itemsToGet.removeAll(itemsInInventory);
 
         System.out.print("You still need to find: ");
-        for (String item: itemsToGet) {
+        for (String item : itemsToGet) {
             System.out.print(item + ", ");
         }
-        System.out.println("");
+        System.out.println();
+
+    }
+
+    public int ItemsToGet() {
+        Set<String> itemsToGet = new HashSet<>(items);
+        itemsToGet.removeAll(itemsInInventory);
+        int amountItems = itemsToGet.size();
+
+        return amountItems;
     }
 
     public Set<String> getItemsInInventory() {
         HashSet<String> returnItems = new HashSet<>(itemsInInventory);
         return returnItems;
+    }
+
+    public Set<String> getItems() {
+        return items;
     }
 }
